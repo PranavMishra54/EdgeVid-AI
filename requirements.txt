@@ -9,3 +9,5 @@ pydub
 moviepy
 opencv-python
 python-multipart
+langchain
+langchain-text-splitters

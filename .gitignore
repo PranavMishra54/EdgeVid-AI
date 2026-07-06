@@ -6,18 +6,25 @@ __pycache__/
 *.pyc
 
 # Streamlit
-.streamlit/
+.streamlit/*
+!.streamlit/
+!.streamlit/config.toml
 
 # Environment Variables
 .env
 
 # Output Files
-uploads/
-extracted_audio/
-transcripts/
-summaries/
+uploads/*
+!uploads/.gitkeep
+extracted_audio/*
+!extracted_audio/.gitkeep
+transcripts/*
+!transcripts/.gitkeep
+summaries/*
+!summaries/.gitkeep
 output/
-chroma_db/
+chroma_db/*
+!chroma_db/.gitkeep
 
 # VS Code
 .vscode/
