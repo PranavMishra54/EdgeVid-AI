@@ -1,4 +1,6 @@
 streamlit
 openai-whisper
-ollama
+requests
+python-dotenv
+langchain
 langchain-text-splitters
