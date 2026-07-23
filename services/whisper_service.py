@@ -7,14 +7,13 @@ from config import TRANSCRIPT_DIR
 class WhisperService:
 
     def __init__(self):
-        self.model = whisper.load_model("base")
+        self.model = whisper.load_model("tiny")
 
     def transcribe(self, audio_path: Path):
 
         result = self.model.transcribe(
             str(audio_path),
             fp16=False,
-            language="hi",
             task="transcribe"
         )
 
