@@ -1,6 +1,6 @@
 # 🎥 EdgeVid AI
 
-> **Offline Multilingual Video Intelligence System**
+> **Offline Multilingual Video Summarization System**
 
 EdgeVid AI is an offline AI-powered video summarization system that extracts speech from videos, generates transcripts using Whisper, cleans transcription errors using a Small Language Model (Qwen2.5:1.5B), and produces concise summaries. The entire pipeline runs locally without requiring cloud APIs, making it suitable for edge devices such as NVIDIA Jetson Orin.
 
