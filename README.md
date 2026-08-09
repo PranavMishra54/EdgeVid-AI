@@ -123,9 +123,9 @@ EdgeVid-AI/
 
 - FFmpeg
 
-### AI Framework
+### Text Splitting
 
-- LangChain
+- LangChain Text Splitters
 
 ### Deployment Target
 

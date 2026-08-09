@@ -2,5 +2,4 @@ streamlit
 openai-whisper
 requests
 python-dotenv
-langchain
 langchain-text-splitters
