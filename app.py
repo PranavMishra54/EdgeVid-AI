@@ -72,7 +72,7 @@ with st.sidebar:
 
         - Whisper
 
-        - Qwen2.5:1.5B
+        - llama3.2:1b
 
         **Mode**
 
