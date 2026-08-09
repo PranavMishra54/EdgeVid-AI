@@ -8,7 +8,7 @@ load_dotenv()
 class QwenService:
 
     def __init__(self):
-        self.model_name = os.getenv("OLLAMA_MODEL", "qwen2.5:1.5b")
+        self.model_name = os.getenv("OLLAMA_MODEL", "llama3.2:1b")
         self.base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 
     def generate(self, prompt: str) -> str:

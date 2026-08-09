@@ -2,7 +2,7 @@
 
 > **Offline Multilingual Video Summarization System**
 
-EdgeVid AI is an offline AI-powered video summarization system that extracts speech from videos, generates transcripts using Whisper, cleans transcription errors using a Small Language Model (Qwen2.5:1.5B), and produces concise summaries. The entire pipeline runs locally without requiring cloud APIs, making it suitable for edge devices such as NVIDIA Jetson Orin.
+EdgeVid AI is an offline AI-powered video summarization system that extracts speech from videos, generates transcripts using Whisper, cleans transcription errors using a Small Language Model (Llama 3.2:1B), and produces concise summaries. The entire pipeline runs locally without requiring cloud APIs, making it suitable for edge devices such as NVIDIA Jetson Orin.
 
 ---
 
@@ -11,7 +11,7 @@ EdgeVid AI is an offline AI-powered video summarization system that extracts spe
 - 🎥 Upload video files
 - 🎵 Automatic audio extraction using FFmpeg
 - 🎤 Speech-to-text transcription using Whisper
-- ✨ AI-powered transcript cleaning using Qwen2.5:1.5B
+- ✨ AI-powered transcript cleaning using Llama 3.2:1B
 - 📋 Hierarchical AI summarization
 - 🌍 Supports multilingual speech
 - 📥 Download cleaned transcript
@@ -40,7 +40,7 @@ EdgeVid AI is an offline AI-powered video summarization system that extracts spe
                       │
                       ▼
           TranscriptService
-        (Cleaning using Qwen)
+        (Cleaning using Llama 3.2:1B)
                       │
                       ▼
           Clean Transcript
@@ -116,7 +116,7 @@ EdgeVid-AI/
 
 ### Large Language Model
 
-- Qwen2.5:1.5B
+- Llama 3.2:1B
 - Ollama
 
 ### Audio Processing
@@ -201,10 +201,10 @@ ollama --version
 
 ---
 
-## Download Qwen Model
+## Download Llama Model
 
 ```bash
-ollama pull qwen2.5:1.5b
+ollama pull llama3.2:1b
 ```
 
 ---
@@ -222,7 +222,7 @@ streamlit run app.py
 1. Upload a video.
 2. Extract audio using FFmpeg.
 3. Generate transcript using Whisper.
-4. Clean transcript using Qwen2.5:1.5B.
+4. Clean transcript using Llama 3.2:1B.
 5. Split transcript into chunks.
 6. Generate summaries for each chunk.
 7. Merge chunk summaries.
@@ -247,7 +247,7 @@ Raw Transcript
    │
    ▼
 Transcript Cleaning
-(Qwen2.5:1.5B)
+(Llama 3.2:1B)
    │
    ▼
 Clean Transcript

@@ -13,9 +13,10 @@ from services.summary_service import SummaryService
 
 st.set_page_config(
     page_title="EdgeVid AI",
-    page_icon="🎥",
+    page_icon=":movie_camera:",
     layout="wide",
 )
+
 
 # Cached Services
 
@@ -51,17 +52,17 @@ summary_service = get_summary_service()
 
 with st.sidebar:
 
-    st.title("🎥 EdgeVid AI")
+    st.title("EdgeVid AI")
 
     st.markdown("---")
 
     st.markdown("### AI Pipeline")
 
-    st.success("1️⃣ Upload Video")
-    st.success("2️⃣ Extract Audio")
-    st.success("3️⃣ Whisper Transcription")
-    st.success("4️⃣ Transcript Cleaning")
-    st.success("5️⃣ AI Summarization")
+    st.success("1. Upload Video")
+    st.success("2. Extract Audio")
+    st.success("3. Whisper Transcription")
+    st.success("4. Transcript Cleaning")
+    st.success("5. AI Summarization")
 
     st.markdown("---")
 
@@ -69,9 +70,9 @@ with st.sidebar:
         """
         **Models**
 
-        • Whisper
+        - Whisper
 
-        • Qwen2.5:1.5B
+        - Qwen2.5:1.5B
 
         **Mode**
 
@@ -82,7 +83,7 @@ with st.sidebar:
 
 # Header
 
-st.title("🎥 EdgeVid AI")
+st.title("EdgeVid AI")
 st.caption("Offline Multilingual Video Intelligence System")
 
 st.divider()
@@ -101,37 +102,39 @@ if uploaded_video is not None:
     status = st.empty()
 
     # Save Video
-    
-    status.info("📥 Saving video...")
+
+    status.info("Saving video...")
     progress.progress(10)
 
     file_path = VideoService.save_video(uploaded_video)
 
-    
     # Metadata
-    
-    status.info("📄 Reading video metadata...")
+
+    status.info("Reading video metadata...")
     progress.progress(20)
 
     try:
         metadata = VideoService.get_video_metadata(file_path)
         info = VideoService.parse_metadata(metadata)
 
+        if info is None:
+            st.error("No readable video stream was found in this file.")
+            st.stop()
+
     except Exception as e:
         st.error(e)
         st.stop()
 
-    
     # Video Information
-    
-    with st.expander("📹 Video Information", expanded=True):
+
+    with st.expander("Video Information", expanded=True):
 
         col1, col2 = st.columns(2)
 
         with col1:
 
             st.metric("Resolution",
-                      f"{info['width']} × {info['height']}")
+                      f"{info['width']} x {info['height']}")
 
             st.metric("Codec",
                       info["codec"])
@@ -154,10 +157,9 @@ if uploaded_video is not None:
                 uploaded_video.name
             )
 
-    
     # Audio Extraction
-    
-    status.info("🎵 Extracting audio...")
+
+    status.info("Extracting audio...")
     progress.progress(35)
 
     try:
@@ -169,10 +171,9 @@ if uploaded_video is not None:
         st.error(e)
         st.stop()
 
-    
     # Whisper
-    
-    status.info("🎤 Transcribing audio...")
+
+    status.info("Transcribing audio...")
     progress.progress(55)
 
     try:
@@ -184,17 +185,39 @@ if uploaded_video is not None:
         st.error(e)
         st.stop()
 
-    
+    # Language and Raw Transcript
+
+    raw_transcript = result.get("text", "").strip()
+    language = result.get("language", "unknown")
+
+    if not raw_transcript:
+        st.error("Whisper did not return any transcript text.")
+        st.stop()
+
+    st.success(
+        f"Detected Language: {language.upper()}"
+    )
+
+    with st.expander("Raw Transcript"):
+
+        st.text_area(
+            "Raw transcript",
+            raw_transcript,
+            height=250,
+            key="raw",
+            label_visibility="collapsed"
+        )
+
     # Transcript Cleaning
-    
-    status.info("🧹 Cleaning transcript...")
+
+    status.info("Cleaning transcript...")
     progress.progress(70)
 
     try:
 
         cleaned_transcript = transcript_service.clean(
-            result["text"],
-            result["language"]
+            raw_transcript,
+            language
         )
 
         cleaned_path = transcript_service.save(
@@ -207,10 +230,30 @@ if uploaded_video is not None:
         st.error(e)
         st.stop()
 
+    # Clean Transcript
+
+    with st.expander(
+        "Cleaned Transcript",
+        expanded=True
+    ):
+
+        st.text_area(
+            "Cleaned transcript",
+            cleaned_transcript,
+            height=250,
+            key="clean",
+            label_visibility="collapsed"
+        )
+
+        st.download_button(
+            "Download Clean Transcript",
+            cleaned_transcript,
+            file_name=f"{audio_path.stem}_cleaned.txt"
+        )
 
     # AI Summary
-    
-    status.info("🤖 Generating summary...")
+
+    status.info("Generating summary...")
     progress.progress(90)
 
     try:
@@ -230,57 +273,14 @@ if uploaded_video is not None:
         st.stop()
 
     progress.progress(100)
-    status.success("✅ Processing Complete!")
+    status.success("Processing complete!")
 
     st.divider()
 
-    
-    # Language
-    
-    st.success(
-        f"Detected Language : {result['language'].upper()}"
-    )
-
-    
-    # Raw Transcript
-    
-    with st.expander("📝 Raw Transcript"):
-
-        st.text_area(
-            "Raw transcript",
-            result["text"],
-            height=250,
-            key="raw",
-            label_visibility="collapsed"
-        )
-
-    
-    # Clean Transcript
-    
-    with st.expander(
-        "✨ Cleaned Transcript",
-        expanded=True
-    ):
-
-        st.text_area(
-            "Cleaned transcript",
-            cleaned_transcript,
-            height=250,
-            key="clean",
-            label_visibility="collapsed"
-        )
-
-        st.download_button(
-            "⬇ Download Clean Transcript",
-            cleaned_transcript,
-            file_name=f"{audio_path.stem}_cleaned.txt"
-        )
-
-   
     # Summary
-    
+
     with st.expander(
-        "📋 AI Summary",
+        "AI Summary",
         expanded=True
     ):
 
@@ -293,7 +293,7 @@ if uploaded_video is not None:
         )
 
         st.download_button(
-            "⬇ Download Summary",
+            "Download Summary",
             summary,
             file_name=f"{audio_path.stem}_summary.txt"
         )
