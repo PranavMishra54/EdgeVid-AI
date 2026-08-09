@@ -275,8 +275,6 @@ if uploaded_video is not None:
     progress.progress(100)
     status.success("Processing complete!")
 
-    st.divider()
-
     # Summary
 
     with st.expander(
